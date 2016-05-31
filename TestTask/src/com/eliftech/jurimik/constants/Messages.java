@@ -18,5 +18,8 @@ public class Messages {
 	public static final String OK = "OK!";
 
 	public static final String CHECK_SQL_DRIVER = "Check you SQL driver";
+
+	public static final String EMPTY_LIST = "Unfortunatelly, list is empty";
+	public static final String LIST_OF_COMPANIES = "List of companies";
 	
 }

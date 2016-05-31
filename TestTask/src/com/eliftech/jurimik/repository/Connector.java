@@ -14,17 +14,21 @@ public class Connector {
 	private static Connection connection;
 	private static ResultSet resultSet;
 
-	static void executeUpdate(String query) {
-        try {
+	static int executeUpdate(String query) {
+		int result = 0;
+		
+		try {
 			connection = getDBConnection();
 	        createStatement();
-	        statement.executeUpdate(query);
+	        result = statement.executeUpdate(query);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
         close(new AutoCloseable[]{statement, connection});
+
+        return result;
     }
 	
 	static ResultSet executeQuery(String query) {
@@ -37,8 +41,9 @@ public class Connector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		close(new AutoCloseable[]{resultSet, statement, connection});
-        return resultSet;
+		close(new AutoCloseable[]{statement, connection});
+        
+		return resultSet;
     }
 		
 	private static Connection getDBConnection() throws SQLException, ClassNotFoundException {

@@ -22,6 +22,17 @@ public class CompanyService {
 	}
 
 	public static boolean delete(long id) {
+		Company delCompany;
+		try {
+			delCompany = get(id);
+			for (Company c : CompanyService.getChild(delCompany)) {
+				c.setParentId(delCompany.getParentId());
+				c.setParentName(delCompany.getParentName());
+				CompanyService.update(c);
+			}
+		} catch (UnknownCompanyException e) {
+			return false;
+		}
 		return CompanyRepository.delete(id);
 	}
 

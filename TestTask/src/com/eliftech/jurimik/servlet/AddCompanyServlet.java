@@ -16,9 +16,6 @@ import com.eliftech.jurimik.model.Company;
 import com.eliftech.jurimik.service.CompanyService;
 import com.eliftech.jurimik.util.EarningsConverter;
 
-/**
- * Servlet implementation class AddCompanyServlet
- */
 @WebServlet("/AddCompanyServlet")
 public class AddCompanyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,9 +26,6 @@ public class AddCompanyServlet extends HttpServlet {
 		request.getRequestDispatcher("add-company.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try{
@@ -41,11 +35,12 @@ public class AddCompanyServlet extends HttpServlet {
 		
 			Company company = new CompanyBuilder(name, earnings).parent(parentCompany).build();
 		
-//			boolean isAdded = 
-			CompanyService.add(company);
-//			if (isAdded) 
-			request.setAttribute(Parameters.MESSAGE, Messages.ADD_SUCCESS);
-//			else request.setAttribute(Parameters.MESSAGE, Messages.ADD_FAIL);
+			boolean isAdded = CompanyService.add(company);
+			if (isAdded) {
+				request.setAttribute(Parameters.MESSAGE, Messages.ADD_SUCCESS);
+			} else  {
+				request.setAttribute(Parameters.MESSAGE, Messages.ADD_FAIL);
+			}
 		} catch (IllegalFormatEarningsException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
 		} finally {

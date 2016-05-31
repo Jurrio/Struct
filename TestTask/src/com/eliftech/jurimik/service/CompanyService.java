@@ -9,11 +9,11 @@ import com.eliftech.jurimik.exception.UnknownCompanyException;
 
 public class CompanyService {
 
-	public static void add(Company company) {
-		CompanyRepository.add(company);
+	public static boolean add(Company company) {
+		return CompanyRepository.add(company);
 	}
 
-	public static Company find(String parameter) throws UnknownCompanyException {
+	public static List<Company> find(String parameter) throws UnknownCompanyException {
 		return CompanyRepository.find(parameter);
 	}
 
@@ -21,12 +21,12 @@ public class CompanyService {
 		return CompanyRepository.get(id);
 	}
 
-	public static void delete(long id) {
-		CompanyRepository.delete(id);
+	public static boolean delete(long id) {
+		return CompanyRepository.delete(id);
 	}
 
-	public static void update(Company company) {
-		CompanyRepository.update(company);
+	public static boolean update(Company company) {
+		return CompanyRepository.update(company);
 	}
 
 	public static List<Company> getAll() {

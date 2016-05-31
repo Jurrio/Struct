@@ -32,12 +32,13 @@ public class UpdateCompanyServlet extends HttpServlet {
 			if (request.getParameter(Parameters.PARENT) != null) company.setParentId(CompanyService.get(Long.parseLong(request.getParameter(Parameters.PARENT))).getId());
 			if (request.getParameter(Parameters.EARNINGS) != null) company.setEarnings(EarningsConverter.get(request.getParameter(Parameters.EARNINGS)));
 			
-//			boolean isUpdated = 
-			CompanyService.update(company);
+			boolean isUpdated = CompanyService.update(company);
 			
-//			if (isUpdated) 
-			request.setAttribute(Parameters.MESSAGE, Messages.UPDATE_SUCCESS);
-//			else request.setAttribute(Parameters.MESSAGE, Messages.UPDATE_FAIL);
+			if (isUpdated) {
+				request.setAttribute(Parameters.MESSAGE, Messages.UPDATE_SUCCESS);
+			} else {
+				request.setAttribute(Parameters.MESSAGE, Messages.UPDATE_FAIL);
+			}
 			
 			
 		} catch (UnknownCompanyException e) {

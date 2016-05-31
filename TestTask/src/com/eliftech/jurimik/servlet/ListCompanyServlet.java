@@ -24,8 +24,12 @@ public class ListCompanyServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Company> companies = CompanyService.getAll();
-		request.setAttribute(Parameters.COMPANIES, companies);
-		request.setAttribute(Parameters.MESSAGE, Messages.VOID);
+		if (companies.isEmpty()) {
+			request.setAttribute(Parameters.MESSAGE, Messages.EMPTY_LIST);
+		} else {
+			request.setAttribute(Parameters.MESSAGE, Messages.LIST_OF_COMPANIES);
+			request.setAttribute(Parameters.COMPANIES, companies);
+		}
 		request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 	}
 

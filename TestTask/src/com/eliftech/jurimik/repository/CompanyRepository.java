@@ -11,10 +11,11 @@ import com.eliftech.jurimik.model.Company;
 
 public class CompanyRepository {
 		
-	public static void add(Company company) {
+	public static boolean add(Company company) {
 		String query = "INSERT INTO company (name, earnings, parent) VALUES ('" + company.getName() + 
 				"', '" + company.getEarnings() + "', '" + company.getParentId() + "');";
-		Connector.executeUpdate(query);
+		if (Connector.executeUpdate(query) > 0) return true;
+		return false;
 	}
 	
 	public static Company get(long id) throws UnknownCompanyException {
@@ -24,39 +25,43 @@ public class CompanyRepository {
 			while(rs.next()) {
 				return CompanyBuilder.buildFromResultSet(rs);
 			}
+			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
+		
 		return new CompanyBuilder("null", 0).build(); //TODO temporary
 		
 	}
 	
-	public static Company find(String name) throws UnknownCompanyException {
-		String query = "SELECT * FROM company WHERE name = " + name + ";";
+	public static List<Company> find(String pattern) throws UnknownCompanyException {
+		String query = "SELECT * FROM company WHERE name, earnings LIKE '%" + pattern + "%';";
 		ResultSet rs = Connector.executeQuery(query);
+		List<Company> resultList = new ArrayList<>();
 		try {
 			while(rs.next()) {
-				return CompanyBuilder.buildFromResultSet(rs);
+				 resultList.add(CompanyBuilder.buildFromResultSet(rs));
 			}
+			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
-		return null; //TODO temporary
+		return resultList;
 	}
 	
-	public static void delete(long id) {
-		String query = "DELETE FROM company WHERE id = " + id + ";";
+	public static boolean delete(long id) {
+		String query = "DELETE FROM company WHERE id = '" + id + "';";
 		System.out.println(query);
-		Connector.executeUpdate(query);
+		if (Connector.executeUpdate(query) > 0) return true;
+		return false;
 	}
 	
-	public static void update(Company company) {
-		String query = "UPDATE company SET name = " + company.getName() + ", earnings = "
-				+ company.getEarnings() + ", parent = " + company.getParentId() + 
-				" WHERE id = " + company.getId() + ";";	
-		Connector.executeUpdate(query);
+	public static boolean update(Company company) {
+		String query = "UPDATE company SET name = '" + company.getName() + "', earnings = '"
+				+ company.getEarnings() + "', parent = '" + company.getParentId() + 
+				"' WHERE id = '" + company.getId() + "';";
+		if (Connector.executeUpdate(query) > 0) return true;
+		return false;
 	}
 	
 	public static List<Company> getChildren(Company parent) {

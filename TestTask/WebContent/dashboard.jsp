@@ -36,11 +36,12 @@
 			</tr>
 		<c:forEach items="${companies}" var="company">
 	 		<tr>
+	 			<c:set var="parent" value="${company.parent}"></c:set>
 				<td>${company.id}</td>
 				<td><input class="disabled" name="title" type="text" value="${company.name}" readonly></td>
 				<td><input class="disabled" name="earning" type="text" value="${company.earnings}" readonly></td>
-				<td><input class="disabled" name="parent" type="text" value="${company.parent.name}" readonly></td>
-				<td><input class="disabled" name="parentId" type="text" value="${company.parent.id}" readonly></td>
+				<td><input class="disabled" name="parent" type="text" value="${parent.name}" readonly></td>
+				<td><input class="disabled" name="parentId" type="text" value="${parent.id}" readonly></td>
 				<td><form action="deleteCompany" method="post"> 
 						<input type="text" name="id" value="${company.id}">
 						<input type="submit" value="Delete">
@@ -53,8 +54,9 @@
 			 	</td>
 			</tr>
 		</c:forEach>	
+		
 	</table>
 	<c:out value="${message}"/>
-
+	
 </body>
 </html>

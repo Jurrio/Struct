@@ -43,7 +43,7 @@
 				<td><input class="disabled" name="parent" type="text" value="${parent.name}" readonly></td>
 				<td><input class="disabled" name="parentId" type="text" value="${parent.id}" readonly></td>
 				<td><form action="deleteCompany" method="post"> 
-						<input type="text" name="id" value="${company.id}">
+						<input type="hidden" name="id" value="${company.id}">
 						<input type="submit" value="Delete">
 					</form>
 				</td>
@@ -56,7 +56,7 @@
 		</c:forEach>	
 		
 	</table>
-	<c:out value="${message}"/>
+	<p><c:out value="Message: ${message} ${fn:length(companies)} items"/>  </p>
 	
 </body>
 </html>

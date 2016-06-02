@@ -38,7 +38,7 @@
 						<select id="parent" name="parent">
 							<option value="0">No company</option>
 							<c:forEach items="${companies}" var="company">
-								<option value="${company.id}">Company ${company.name} </option>
+								<option value="${company.id}">${company.id} ${company.name} </option>
 							</c:forEach>
 						</select>
 					</div>
@@ -48,7 +48,6 @@
 			</form>
 		</div>
 	<p>Message:<c:out value="${message}"/></p>
-	<c:out value="${'<tag> , &'}"/>
 	<p>${fn:length(companies)}</p>
 
 	</body>

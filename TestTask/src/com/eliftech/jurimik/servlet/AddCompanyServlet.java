@@ -1,6 +1,7 @@
 package com.eliftech.jurimik.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +44,9 @@ public class AddCompanyServlet extends HttpServlet {
 			}
 		} catch (IllegalFormatEarningsException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
 			request.getRequestDispatcher("add-company.jsp").forward(request, response);

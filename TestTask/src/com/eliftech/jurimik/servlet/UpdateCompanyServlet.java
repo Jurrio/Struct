@@ -1,6 +1,7 @@
 package com.eliftech.jurimik.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,6 +46,12 @@ public class UpdateCompanyServlet extends HttpServlet {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
 		} catch (IllegalFormatEarningsException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);;
 		}

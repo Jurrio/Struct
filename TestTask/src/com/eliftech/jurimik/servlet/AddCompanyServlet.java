@@ -31,9 +31,9 @@ public class AddCompanyServlet extends HttpServlet {
 		try{
 			String name = request.getParameter(Parameters.NAME);
 			long earnings = EarningsConverter.get(request.getParameter(Parameters.EARNINGS));
-			long parentCompany = Long.parseLong(request.getParameter(Parameters.PARENT));
+			long parentId = Long.parseLong(request.getParameter(Parameters.PARENT));
 		
-			Company company = new CompanyBuilder(name, earnings).parent(parentCompany).build();
+			Company company = new CompanyBuilder(name, earnings).parent(CompanyService.lazyGet(parentId)).build();
 		
 			boolean isAdded = CompanyService.add(company);
 			if (isAdded) {

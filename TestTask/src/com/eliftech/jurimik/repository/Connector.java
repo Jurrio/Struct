@@ -41,7 +41,7 @@ public class Connector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		close(new AutoCloseable[]{statement, connection});
+//		close(new AutoCloseable[]{statement, connection});
         
 		return resultSet;
     }

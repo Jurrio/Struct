@@ -1,12 +1,16 @@
 package com.eliftech.jurimik.model;
 
+import java.util.List;
+
 public class Company {
 	
 	private long id;
 	private String name;
 	private long earnings;
-	private long parentId;
-	private String parentName;
+//	private long parentId;
+//	private String parentName;
+	private Company parent;
+	private List<Company> children;
 	
 	public Company() {
 	}
@@ -31,8 +35,22 @@ public class Company {
 	public void setEarnings(long earnings) {
 		this.earnings = earnings;
 	}
+
+	public Company getParent() {
+		return parent;
+	}
+	public void setParent(Company parent) {
+		this.parent = parent;
+	}
+
+	public List<Company> getChildren() {
+		return children;
+	}
+	public void setChildren(List<Company> children) {
+		this.children = children;
+	}
 	
-	public long getParentId() {
+/*	public long getParentId() {
 		return parentId;
 	}
 	public void setParentId(long parentId) {
@@ -45,5 +63,5 @@ public class Company {
 
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
-	}
+	}*/
 }

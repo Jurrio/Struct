@@ -29,7 +29,7 @@ public class CompanyService {
 		Company delCompany;
 		try {
 			delCompany = get(id);
-			for (Company c : CompanyService.getChildren(delCompany)) {
+			for (Company c : CompanyService.getChildren(id)) {
 				c.setParent(delCompany.getParent());
 				CompanyService.update(c);
 			}
@@ -47,7 +47,7 @@ public class CompanyService {
 		return CompanyRepository.getAll();
 	}
 
-	public static List<Company> getChildren(Company company) {
-		return CompanyRepository.getChildren(company);
+	public static List<Company> getChildren(long id) {
+		return CompanyRepository.getChildren(id);
 	}
 }

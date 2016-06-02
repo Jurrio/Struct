@@ -19,9 +19,9 @@
 		
 		${message}
 		<h1>HELLO!</h1>
-		Parent company: ${company.parentName}
+		Parent company: ${company.parent.name}
 		<form action="viewCompany" method="post">
-			<input name="id" type="hidden" value="${company.parentId}">
+			<input name="id" type="hidden" value="${company.parent.id}">
 			<input type="submit" value="info">
 		</form> 
 		<p>Child companies: </p>

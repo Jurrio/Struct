@@ -14,7 +14,8 @@ public class CompanyRepository {
 		
 	public static boolean add(Company company) {
 		String query = "INSERT INTO company (name, earnings, parent) VALUES ('" + company.getName() + 
-				"', '" + company.getEarnings() + "', '" + company.getParent().getId() + "');";
+				"', '" + company.getEarnings() + "', '" + (company.getParent() == null ? "0" : 
+					company.getParent().getId()) + "');";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
@@ -36,7 +37,7 @@ public class CompanyRepository {
 	}
 	
 	public static Company lazyGet(long id) throws SQLException {
-		String query = "SELECT * FROM company WHERE parent = " + id + ";";
+		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = Connector.executeQuery(query);
 		while (rs.next()) {
 			return CompanyConverter.lazyConvertCompanyFromResultSet(rs);

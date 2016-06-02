@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.eliftech.jurimik.constants.Messages;
 import com.eliftech.jurimik.constants.Parameters;
+import com.eliftech.jurimik.exception.UnknownCompanyException;
 import com.eliftech.jurimik.model.Company;
 import com.eliftech.jurimik.service.CompanyService;
 
@@ -23,14 +24,20 @@ public class ListCompanyServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Company> companies = CompanyService.getAll();
-		if (companies.isEmpty()) {
-			request.setAttribute(Parameters.MESSAGE, Messages.EMPTY_LIST);
-		} else {
-			request.setAttribute(Parameters.MESSAGE, Messages.LIST_OF_COMPANIES);
-			request.setAttribute(Parameters.COMPANIES, companies);
+		try {
+			List<Company> companies = CompanyService.getAll();
+			if (companies.isEmpty()) {
+				request.setAttribute(Parameters.MESSAGE, Messages.EMPTY_LIST);
+			} else {
+				request.setAttribute(Parameters.MESSAGE, Messages.LIST_OF_COMPANIES);
+				request.setAttribute(Parameters.COMPANIES, companies);
+			}
+			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+		} catch (UnknownCompanyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+	
 	}
 
 }

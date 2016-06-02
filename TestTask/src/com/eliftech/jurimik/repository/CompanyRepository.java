@@ -92,14 +92,14 @@ public class CompanyRepository {
 		return children;
 	}
 	
-	public static List<Company> getAll() {
+	public static List<Company> getAll() throws UnknownCompanyException {
 		String query = "SELECT * FROM company;";
 		ResultSet rs = Connector.executeQuery(query); 
 		List<Company> companies = new ArrayList<>();
 		try {
 			while (rs.next()) {
 				Company company = null;
-				company = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
+				company = CompanyConverter.convertCompanyFromResultSet(rs);
 				
 				companies.add(company);
 			}

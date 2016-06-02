@@ -44,7 +44,7 @@ public class CompanyService {
 		return CompanyRepository.update(company);
 	}
 
-	public static List<Company> getAll() {
+	public static List<Company> getAll() throws UnknownCompanyException {
 		return CompanyRepository.getAll();
 	}
 

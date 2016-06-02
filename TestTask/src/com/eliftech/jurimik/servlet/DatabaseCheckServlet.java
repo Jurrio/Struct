@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.eliftech.jurimik.constants.Messages;
 import com.eliftech.jurimik.constants.Parameters;
+import com.eliftech.jurimik.exception.UnknownCompanyException;
 import com.eliftech.jurimik.service.CompanyService;
 
 @WebServlet("/DatabaseCheckServlet")
@@ -22,9 +23,15 @@ public class DatabaseCheckServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CompanyService.getAll();
-		request.setAttribute(Parameters.MESSAGE, Messages.OK);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		try {
+			CompanyService.getAll();
+			request.setAttribute(Parameters.MESSAGE, Messages.OK);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+		} catch (UnknownCompanyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -28,9 +28,9 @@ public class UpdateCompanyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Company company = CompanyService.get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
-			if (request.getParameter(Parameters.NAME) != null) company.setName(request.getParameter(Parameters.NAME));
-			if (request.getParameter(Parameters.PARENT) != null) company.setParentId(CompanyService.get(Long.parseLong(request.getParameter(Parameters.PARENT))).getId());
-			if (request.getParameter(Parameters.EARNINGS) != null) company.setEarnings(EarningsConverter.get(request.getParameter(Parameters.EARNINGS)));
+			company.setName(request.getParameter(Parameters.NAME));
+			company.setParent(CompanyService.lazyGet(Long.parseLong(request.getParameter(Parameters.PARENT))));
+			company.setEarnings(EarningsConverter.get(request.getParameter(Parameters.EARNINGS)));
 			
 			boolean isUpdated = CompanyService.update(company);
 			

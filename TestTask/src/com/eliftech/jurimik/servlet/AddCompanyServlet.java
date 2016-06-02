@@ -13,7 +13,6 @@ import com.eliftech.jurimik.builder.CompanyBuilder;
 import com.eliftech.jurimik.constants.Messages;
 import com.eliftech.jurimik.constants.Parameters;
 import com.eliftech.jurimik.exception.IllegalFormatEarningsException;
-import com.eliftech.jurimik.model.Company;
 import com.eliftech.jurimik.service.CompanyService;
 import com.eliftech.jurimik.util.EarningsConverter;
 
@@ -34,9 +33,13 @@ public class AddCompanyServlet extends HttpServlet {
 			long earnings = EarningsConverter.get(request.getParameter(Parameters.EARNINGS));
 			long parentId = Long.parseLong(request.getParameter(Parameters.PARENT));
 		
-			Company company = new CompanyBuilder(name, earnings).parent(CompanyService.lazyGet(parentId)).build();
+			CompanyBuilder cBuilder = new CompanyBuilder(name, earnings);
+			
+			if (parentId != 0) {
+				cBuilder = cBuilder.parent(CompanyService.lazyGet(parentId));
+			}
 		
-			boolean isAdded = CompanyService.add(company);
+			boolean isAdded = CompanyService.add(cBuilder.build());
 			if (isAdded) {
 				request.setAttribute(Parameters.MESSAGE, Messages.ADD_SUCCESS);
 			} else  {

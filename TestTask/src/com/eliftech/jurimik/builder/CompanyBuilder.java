@@ -1,46 +1,39 @@
 package com.eliftech.jurimik.builder;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-import com.eliftech.jurimik.exception.UnknownCompanyException;
 import com.eliftech.jurimik.model.Company;
-import com.eliftech.jurimik.service.CompanyService;
 
 public class CompanyBuilder {
 	
 	private final String name;
 	private final long earnings;
-	private long parent;
+	private long id;
+	private Company parent;
+	private List<Company> children; 
 	
 	public CompanyBuilder(String name, long earnings) {
 		this.name = name;
 		this.earnings = earnings;
 	}
 	
-	public CompanyBuilder parent(long parentId) {
-		if (parentId != 0) {
-			this.parent = parentId;
-		}
+	public CompanyBuilder parent(Company parent) {
+		this.parent = parent;
+		return this;
+	}
+	
+	public CompanyBuilder children(List<Company> children) {
+		this.children = children;
 		return this;
 	}
 	
 	public Company build() {
 		Company company = new Company();
+		company.setId(id);
 		company.setName(name);
 		company.setEarnings(earnings);
-		company.setParentId(parent);
+		company.setParent(parent);
+		company.setChildren(children);
 		return company;
-	}
-	
-	public static Company buildFromResultSet(ResultSet rs) throws SQLException, UnknownCompanyException {
-		Company foundCompany = new Company();
-		foundCompany.setId(rs.getLong("id"));
-		foundCompany.setName(rs.getString("name"));
-		foundCompany.setEarnings(rs.getLong("earnings"));
-		foundCompany.setParentId(rs.getLong("parent"));
-		foundCompany.setParentName(CompanyService.get(foundCompany.getParentId()).getName());
-		
-		return foundCompany;
 	}
 }

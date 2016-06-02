@@ -8,12 +8,13 @@ import java.util.List;
 import com.eliftech.jurimik.builder.CompanyBuilder;
 import com.eliftech.jurimik.exception.UnknownCompanyException;
 import com.eliftech.jurimik.model.Company;
+import com.eliftech.jurimik.util.CompanyConverter;
 
 public class CompanyRepository {
 		
 	public static boolean add(Company company) {
 		String query = "INSERT INTO company (name, earnings, parent) VALUES ('" + company.getName() + 
-				"', '" + company.getEarnings() + "', '" + company.getParentId() + "');";
+				"', '" + company.getEarnings() + "', '" + company.getParent().getId() + "');";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
@@ -23,7 +24,7 @@ public class CompanyRepository {
 		ResultSet rs = Connector.executeQuery(query);
 		try {
 			while(rs.next()) {
-				return CompanyBuilder.buildFromResultSet(rs);
+				return CompanyConverter.convertCompanyFromResultSet(rs);
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -40,7 +41,7 @@ public class CompanyRepository {
 		List<Company> resultList = new ArrayList<>();
 		try {
 			while(rs.next()) {
-				 resultList.add(CompanyBuilder.buildFromResultSet(rs));
+				 resultList.add(CompanyConverter.lazyConvertCompanyFromResultSet(rs));
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -58,24 +59,20 @@ public class CompanyRepository {
 	
 	public static boolean update(Company company) {
 		String query = "UPDATE company SET name = '" + company.getName() + "', earnings = '"
-				+ company.getEarnings() + "', parent = '" + company.getParentId() + 
+				+ company.getEarnings() + "', parent = '" + company.getParent().getId() + 
 				"' WHERE id = '" + company.getId() + "';";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
 	
-	public static List<Company> getChildren(Company parent) {
-		String query = "SELECT * FROM company WHERE parent = " + parent.getId() + ";";
+	public static List<Company> getChildren(long id) {
+		String query = "SELECT * FROM company WHERE parent = " + id + ";";
 		ResultSet rs = Connector.executeQuery(query);
 		List<Company> children = new ArrayList<>();
 		try {
 			while (rs.next()) {
 				Company company = null;
-				try {
-					company = CompanyBuilder.buildFromResultSet(rs);
-				} catch (UnknownCompanyException e) {
-					e.printStackTrace();
-				}
+				company = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
 								
 				children.add(company);
 			}
@@ -92,11 +89,7 @@ public class CompanyRepository {
 		try {
 			while (rs.next()) {
 				Company company = null;
-				try {
-					company = CompanyBuilder.buildFromResultSet(rs);
-				} catch (UnknownCompanyException e) {
-					e.printStackTrace();
-				}
+				company = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
 				
 				companies.add(company);
 			}
@@ -105,6 +98,11 @@ public class CompanyRepository {
 			e.printStackTrace();
 		}
 		return companies;
+	}
+
+	public static Company lazyGet(long parentId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

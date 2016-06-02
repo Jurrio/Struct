@@ -20,14 +20,17 @@ public class CompanyService {
 	public static Company get(long id) throws UnknownCompanyException {
 		return CompanyRepository.get(id);
 	}
+	
+	public static Company lazyGet(long parentId) {
+		return CompanyRepository.lazyGet(parentId);
+	}
 
 	public static boolean delete(long id) {
 		Company delCompany;
 		try {
 			delCompany = get(id);
-			for (Company c : CompanyService.getChild(delCompany)) {
-				c.setParentId(delCompany.getParentId());
-				c.setParentName(delCompany.getParentName());
+			for (Company c : CompanyService.getChildren(delCompany)) {
+				c.setParent(delCompany.getParent());
 				CompanyService.update(c);
 			}
 		} catch (UnknownCompanyException e) {
@@ -44,8 +47,7 @@ public class CompanyService {
 		return CompanyRepository.getAll();
 	}
 
-	public static List<Company> getChild(Company company) {
+	public static List<Company> getChildren(Company company) {
 		return CompanyRepository.getChildren(company);
 	}
-
 }

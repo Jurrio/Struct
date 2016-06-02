@@ -17,6 +17,14 @@ public class CompanyConverter {
 		
 		return foundCompany.build();
 	}
+	
+	public static Company lazyConvertCompanyFromResultSet(ResultSet rs) throws SQLException {
+		String name = rs.getString("name");
+		long earnings = rs.getLong("earnings");
+		CompanyBuilder foundCompany = new CompanyBuilder(name, earnings).id(rs.getLong("id"));
+		
+		return foundCompany.build();
+	}
 
 
 }

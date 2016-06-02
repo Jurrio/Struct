@@ -35,6 +35,15 @@ public class CompanyRepository {
 		
 	}
 	
+	public static Company lazyGet(long id) throws SQLException {
+		String query = "SELECT * FROM company WHERE parent = " + id + ";";
+		ResultSet rs = Connector.executeQuery(query);
+		while (rs.next()) {
+			return CompanyConverter.lazyConvertCompanyFromResultSet(rs);
+		}
+		return null;
+	}
+	
 	public static List<Company> find(String pattern) throws UnknownCompanyException {
 		String query = "SELECT * FROM company WHERE name, earnings LIKE '%" + pattern + "%';";
 		ResultSet rs = Connector.executeQuery(query);
@@ -99,10 +108,5 @@ public class CompanyRepository {
 		}
 		return companies;
 	}
-
-	public static Company lazyGet(long parentId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

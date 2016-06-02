@@ -17,6 +17,11 @@ public class CompanyBuilder {
 		this.earnings = earnings;
 	}
 	
+	public CompanyBuilder id(long id) {
+		this.id = id;
+		return this;
+	}
+	
 	public CompanyBuilder parent(Company parent) {
 		this.parent = parent;
 		return this;

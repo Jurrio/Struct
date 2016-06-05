@@ -25,7 +25,7 @@ public class ListCompanyServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			List<Company> companies = CompanyService.getAll();
+			List<Company> companies = new CompanyService().getAll();
 			if (companies.isEmpty()) {
 				request.setAttribute(Parameters.MESSAGE, Messages.EMPTY_LIST);
 			} else {

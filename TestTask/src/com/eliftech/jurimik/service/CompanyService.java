@@ -10,45 +10,46 @@ import com.eliftech.jurimik.exception.UnknownCompanyException;
 
 public class CompanyService {
 
-	public static boolean add(Company company) {
-		return CompanyRepository.add(company);
+	public boolean add(Company company) {
+		return new CompanyRepository().add(company);
 	}
 
-	public static List<Company> find(String parameter) throws UnknownCompanyException {
-		return CompanyRepository.find(parameter);
+	public List<Company> find(String parameter) throws UnknownCompanyException {
+		return new CompanyRepository().find(parameter);
 	}
 
-	public static Company get(long id) throws UnknownCompanyException {
-		return CompanyRepository.get(id);
+	public Company get(long id) throws UnknownCompanyException {
+		return new CompanyRepository().get(id);
 	}
 	
-	public static Company lazyGet(long parentId) throws SQLException {
-		return CompanyRepository.lazyGet(parentId);
+	public Company lazyGet(long parentId) throws SQLException {
+		return new CompanyRepository().lazyGet(parentId);
 	}
 
-	public static boolean delete(long id) {
+	public boolean delete(long id) {
 		Company delCompany;
 		try {
+			List<Company> children = this.getChildren(id);
 			delCompany = get(id);
-			for (Company c : CompanyService.getChildren(id)) {
+			for (Company c : children) {
 				c.setParent(delCompany.getParent());
-				CompanyService.update(c);
+				this.update(c);
 			}
 		} catch (UnknownCompanyException e) {
 			return false;
 		}
-		return CompanyRepository.delete(id);
+		return new CompanyRepository().delete(id);
 	}
 
-	public static boolean update(Company company) {
-		return CompanyRepository.update(company);
+	public boolean update(Company company) {
+		return new CompanyRepository().update(company);
 	}
 
-	public static List<Company> getAll() throws UnknownCompanyException {
-		return CompanyRepository.getAll();
+	public List<Company> getAll() throws UnknownCompanyException {
+		return new CompanyRepository().getAll();
 	}
 
-	public static List<Company> getChildren(long id) {
-		return CompanyRepository.getChildren(id);
+	public List<Company> getChildren(long id) {
+		return new CompanyRepository().getChildren(id);
 	}
 }

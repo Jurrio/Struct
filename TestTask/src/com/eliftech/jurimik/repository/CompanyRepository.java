@@ -12,7 +12,7 @@ import com.eliftech.jurimik.util.CompanyConverter;
 
 public class CompanyRepository {
 		
-	public static boolean add(Company company) {
+	public boolean add(Company company) {
 		String query = "INSERT INTO company (name, earnings, parent) VALUES ('" + company.getName() + 
 				"', '" + company.getEarnings() + "', '" + (company.getParent() == null ? "0" : 
 					company.getParent().getId()) + "');";
@@ -20,7 +20,7 @@ public class CompanyRepository {
 		return false;
 	}
 	
-	public static Company get(long id) throws UnknownCompanyException {
+	public Company get(long id) throws UnknownCompanyException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = Connector.executeQuery(query);
 		try {
@@ -36,7 +36,7 @@ public class CompanyRepository {
 		
 	}
 	
-	public static Company lazyGet(long id) throws SQLException {
+	public Company lazyGet(long id) throws SQLException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = Connector.executeQuery(query);
 		while (rs.next()) {
@@ -45,7 +45,7 @@ public class CompanyRepository {
 		return null;
 	}
 	
-	public static List<Company> find(String pattern) throws UnknownCompanyException {
+	public List<Company> find(String pattern) throws UnknownCompanyException {
 		String query = "SELECT * FROM company WHERE name, earnings LIKE '%" + pattern + "%';";
 		ResultSet rs = Connector.executeQuery(query);
 		List<Company> resultList = new ArrayList<>();
@@ -60,14 +60,14 @@ public class CompanyRepository {
 		return resultList;
 	}
 	
-	public static boolean delete(long id) {
+	public boolean delete(long id) {
 		String query = "DELETE FROM company WHERE id = '" + id + "';";
 		System.out.println(query);
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
 	
-	public static boolean update(Company company) {
+	public boolean update(Company company) {
 		String query = "UPDATE company SET name = '" + company.getName() + "', earnings = '"
 				+ company.getEarnings() + "', parent = '" + company.getParent().getId() + 
 				"' WHERE id = '" + company.getId() + "';";
@@ -75,7 +75,7 @@ public class CompanyRepository {
 		return false;
 	}
 	
-	public static List<Company> getChildren(long id) {
+	public List<Company> getChildren(long id) {
 		String query = "SELECT * FROM company WHERE parent = " + id + ";";
 		ResultSet rs = Connector.executeQuery(query);
 		List<Company> children = new ArrayList<>();
@@ -92,7 +92,7 @@ public class CompanyRepository {
 		return children;
 	}
 	
-	public static List<Company> getAll() throws UnknownCompanyException {
+	public List<Company> getAll() throws UnknownCompanyException {
 		String query = "SELECT * FROM company;";
 		ResultSet rs = Connector.executeQuery(query); 
 		List<Company> companies = new ArrayList<>();

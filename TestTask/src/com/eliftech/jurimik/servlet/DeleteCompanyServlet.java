@@ -20,7 +20,7 @@ public class DeleteCompanyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			request.setAttribute(Parameters.MESSAGE, Messages.VOID);
-			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
+			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
 			// TODO Auto-generated catch block
@@ -32,7 +32,7 @@ public class DeleteCompanyServlet extends HttpServlet {
 		try {
 			long id = Long.parseLong(request.getParameter(Parameters.COMPANY_ID));
 		
-			boolean isDeleted = CompanyService.delete(id);
+			boolean isDeleted = new CompanyService().delete(id);
 			
 			if (isDeleted) {
 				request.setAttribute(Parameters.MESSAGE, Messages.DELETE_SUCCESS);
@@ -40,7 +40,7 @@ public class DeleteCompanyServlet extends HttpServlet {
 				request.setAttribute(Parameters.MESSAGE, Messages.DELETE_FAIL);
 			}
 		
-			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
+			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
 			// TODO Auto-generated catch block

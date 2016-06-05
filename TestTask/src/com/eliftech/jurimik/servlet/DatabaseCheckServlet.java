@@ -24,7 +24,7 @@ public class DatabaseCheckServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			CompanyService.getAll();
+			new CompanyService().getAll();
 			request.setAttribute(Parameters.MESSAGE, Messages.OK);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {

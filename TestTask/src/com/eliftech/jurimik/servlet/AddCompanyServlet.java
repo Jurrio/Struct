@@ -24,7 +24,7 @@ public class AddCompanyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			request.setAttribute(Parameters.MESSAGE, Messages.VOID);
-			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
+			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("add-company.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
 			// TODO Auto-generated catch block
@@ -42,17 +42,17 @@ public class AddCompanyServlet extends HttpServlet {
 			CompanyBuilder cBuilder = new CompanyBuilder(name, earnings);
 			
 			if (parentId != 0) {
-				cBuilder = cBuilder.parent(CompanyService.lazyGet(parentId));
+				cBuilder = cBuilder.parent(new CompanyService().lazyGet(parentId));
 			}
 		
-			boolean isAdded = CompanyService.add(cBuilder.build());
+			boolean isAdded = new CompanyService().add(cBuilder.build());
 			if (isAdded) {
 				request.setAttribute(Parameters.MESSAGE, Messages.ADD_SUCCESS);
 			} else  {
 				request.setAttribute(Parameters.MESSAGE, Messages.ADD_FAIL);
 			}
 			
-			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
+			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			
 		} catch (IllegalFormatEarningsException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());

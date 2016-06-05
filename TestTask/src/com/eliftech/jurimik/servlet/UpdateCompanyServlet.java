@@ -29,10 +29,10 @@ public class UpdateCompanyServlet extends HttpServlet {
 		request.setAttribute(Parameters.MESSAGE, Messages.VOID);
 		long id = Long.parseLong(request.getParameter(Parameters.COMPANY_ID));
 		try {
-			Company company = CompanyService.get(id);
+			Company company = new CompanyService().get(id);
 			request.setAttribute(Parameters.COMPANY, company);
 			request.setAttribute(Parameters.COMPANY_ID, company.getId());
-			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
+			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 		} catch (NumberFormatException | UnknownCompanyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class UpdateCompanyServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Company company = CompanyService.get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
+			Company company = new CompanyService().get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
 			
 			String name = company.getName();
 			long earnings = company.getEarnings();
@@ -65,13 +65,13 @@ public class UpdateCompanyServlet extends HttpServlet {
 			}
 			
 			Company updatedCompany = new CompanyBuilder(name, earnings).id(company.getId())
-					.parent(CompanyService.lazyGet(parentId)).build();
+					.parent(new CompanyService().lazyGet(parentId)).build();
 						
 //			company.setName(request.getParameter(Parameters.NAME));
 //			company.setEarnings(EarningsConverter.get(request.getParameter(Parameters.EARNINGS)));
 			
 		
-			boolean isUpdated = CompanyService.update(updatedCompany);
+			boolean isUpdated = new CompanyService().update(updatedCompany);
 			
 			if (isUpdated) {
 				request.setAttribute(Parameters.MESSAGE, Messages.UPDATE_SUCCESS);
@@ -79,7 +79,7 @@ public class UpdateCompanyServlet extends HttpServlet {
 				request.setAttribute(Parameters.MESSAGE, Messages.UPDATE_FAIL);
 			}
 			
-			request.setAttribute(Parameters.COMPANIES, CompanyService.getAll());
+			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 						
 		} catch (UnknownCompanyException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());

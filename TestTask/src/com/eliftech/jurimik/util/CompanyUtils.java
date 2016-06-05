@@ -9,7 +9,7 @@ import com.eliftech.jurimik.service.CompanyService;
 public class CompanyUtils {
 	
 	public static boolean isChildrenId(long id, long newParentId) throws UnknownCompanyException {
-		Company company = CompanyService.get(id);
+		Company company = new CompanyService().get(id);
 		List<Company> children = company.getChildren();
 		
 		if (!children.isEmpty()) {

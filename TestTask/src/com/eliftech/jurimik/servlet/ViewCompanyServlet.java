@@ -25,8 +25,8 @@ public class ViewCompanyServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Company company = CompanyService.get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
-			List<Company> childCompanies = CompanyService.getChildren(company.getId());
+			Company company = new CompanyService().get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
+			List<Company> childCompanies = new CompanyService().getChildren(company.getId());
 			request.setAttribute(Parameters.COMPANY, company);
 			request.setAttribute(Parameters.MESSAGE, Messages.OK);
 			request.setAttribute(Parameters.COMPANIES, childCompanies);

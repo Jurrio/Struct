@@ -21,6 +21,7 @@
 			<input type="submit" value="check database!">
 		</form>
 		${message}
+
 		
 	</body>
 </html>

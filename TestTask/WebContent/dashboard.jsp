@@ -52,6 +52,12 @@
 						<input type="submit" value="Info">
 				 	</form>
 			 	</td>
+			 	<td><form action="UpdateCompanyServlet" method="get">
+						<input type="hidden" name="id" value="${company.id}">
+						<input type="submit" value="Edit">
+				 	</form>
+			 	</td>
+			 	
 			</tr>
 		</c:forEach>	
 		

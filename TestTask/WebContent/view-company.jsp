@@ -18,12 +18,23 @@
 		</ul>
 		
 		${message}
-		<h1>HELLO!</h1>
+		<h1>${company.name}</h1>
 		Parent company: ${company.parent.name}
 		<form action="viewCompany" method="post">
 			<input name="id" type="hidden" value="${company.parent.id}">
 			<input type="submit" value="info">
 		</form> 
+		<form action="updateCompany" method="post">
+			<div class="field">
+				<label for="parent">ParentCompany</label>
+				<select id="parent" name="parent">
+					<option value="0">No company</option>
+					<c:forEach items="${companies}" var="company">
+						<option value="${company.id}">${company.id} ${company.name} </option>
+					</c:forEach>
+				</select>
+			</div>
+		</form>
 		<p>Child companies: </p>
 		<c:forEach items="${companies}" var="child">
 			${child.name}

@@ -9,13 +9,13 @@ import com.eliftech.jurimik.builder.CompanyBuilder;
 import com.eliftech.jurimik.exception.UnknownCompanyException;
 import com.eliftech.jurimik.model.Company;
 import com.eliftech.jurimik.util.CompanyConverter;
+import com.eliftech.jurimik.util.CompanyUtils;
 
 public class CompanyRepository {
 		
 	public boolean add(Company company) {
 		String query = "INSERT INTO company (name, earnings, parent) VALUES ('" + company.getName() + 
-				"', '" + company.getEarnings() + "', '" + (company.getParent() == null ? "0" : 
-					company.getParent().getId()) + "');";
+				"', '" + company.getEarnings() + "', '" + CompanyUtils.parentId(company) + "');";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
@@ -69,7 +69,7 @@ public class CompanyRepository {
 	
 	public boolean update(Company company) {
 		String query = "UPDATE company SET name = '" + company.getName() + "', earnings = '"
-				+ company.getEarnings() + "', parent = '" + company.getParent().getId() + 
+				+ company.getEarnings() + "', parent = '" + CompanyUtils.parentId(company) + 
 				"' WHERE id = '" + company.getId() + "';";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;

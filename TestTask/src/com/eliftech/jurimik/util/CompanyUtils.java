@@ -22,5 +22,9 @@ public class CompanyUtils {
 		return false;
 		
 	}
+	
+	public static long parentId(Company company) {
+		return (company.getParent() == null) ? 0 : company.getParent().getId();
+	}
 
 }

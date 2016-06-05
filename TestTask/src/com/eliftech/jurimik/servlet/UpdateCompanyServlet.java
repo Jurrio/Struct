@@ -46,7 +46,7 @@ public class UpdateCompanyServlet extends HttpServlet {
 			
 			String name = company.getName();
 			long earnings = company.getEarnings();
-			long parentId = (company.getParent() == null) ? 0 : company.getParent().getId();
+			long parentId = CompanyUtils.parentId(company);
 			
 			if (ParamUtils.isNotBlank(request.getParameter(Parameters.COMPANY))) {
 				name = request.getParameter(Parameters.NAME);

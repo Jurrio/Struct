@@ -11,6 +11,7 @@ public class CompanyBuilder {
 	private long id;
 	private Company parent;
 	private List<Company> children; 
+	private long totalEarnings;
 	
 	public CompanyBuilder(String name, long earnings) {
 		this.name = name;
@@ -32,6 +33,11 @@ public class CompanyBuilder {
 		return this;
 	}
 	
+	public CompanyBuilder totalEarnings(long totalEarnings) {
+		this.totalEarnings = totalEarnings;
+		return this;
+	}
+	
 	public Company build() {
 		Company company = new Company();
 		company.setId(id);
@@ -39,6 +45,7 @@ public class CompanyBuilder {
 		company.setEarnings(earnings);
 		company.setParent(parent);
 		company.setChildren(children);
+		company.setTotalEarnings(totalEarnings);
 		return company;
 	}
 }

@@ -39,7 +39,7 @@ public class AddCompanyServlet extends HttpServlet {
 			long earnings = EarningsConverter.get(request.getParameter(Parameters.EARNINGS));
 			long parentId = Long.parseLong(request.getParameter(Parameters.PARENT));
 		
-			CompanyBuilder cBuilder = new CompanyBuilder(name, earnings);
+			CompanyBuilder cBuilder = new CompanyBuilder(name, earnings).totalEarnings(earnings);
 			
 			if (parentId != 0) {
 				cBuilder = cBuilder.parent(new CompanyService().lazyGet(parentId));

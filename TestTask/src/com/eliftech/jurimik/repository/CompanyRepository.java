@@ -14,8 +14,9 @@ import com.eliftech.jurimik.util.CompanyUtils;
 public class CompanyRepository {
 		
 	public boolean add(Company company) {
-		String query = "INSERT INTO company (name, earnings, parent) VALUES ('" + company.getName() + 
-				"', '" + company.getEarnings() + "', '" + CompanyUtils.parentId(company) + "');";
+		String query = "INSERT INTO company (name, earnings, totalEarnings, parent) VALUES ('"
+				+ company.getName() + "', '" + company.getEarnings() + "', '"
+				+ company.getTotalEarnins() + "', '" + CompanyUtils.parentId(company) + "');";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
@@ -68,8 +69,10 @@ public class CompanyRepository {
 	}
 	
 	public boolean update(Company company) {
-		String query = "UPDATE company SET name = '" + company.getName() + "', earnings = '"
-				+ company.getEarnings() + "', parent = '" + CompanyUtils.parentId(company) + 
+		String query = "UPDATE company SET name = '" + company.getName() + 
+				"', earnings = '" + company.getEarnings() + 
+				"', totalEarnings = '" + company.getTotalEarnins() + 
+				"', parent = '" + CompanyUtils.parentId(company) + 
 				"' WHERE id = '" + company.getId() + "';";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;

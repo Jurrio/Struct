@@ -82,6 +82,7 @@ public class Connector {
     			" (id INT AUTO_INCREMENT NOT NULL," +
     			" name VARCHAR(255) NOT NULL," + 
     			" earnings INT NOT NULL," + 
+    			" totalEarnings INT NOT NULL" +
     			" parent INT," + 
     			" PRIMARY KEY (id));");		
 	}

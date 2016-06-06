@@ -7,8 +7,7 @@ public class Company {
 	private long id;
 	private String name;
 	private long earnings;
-//	private long parentId;
-//	private String parentName;
+	private long totalEarnings;
 	private Company parent;
 	private List<Company> children;
 	
@@ -50,18 +49,7 @@ public class Company {
 		this.children = children;
 	}
 	
-/*	public long getParentId() {
-		return parentId;
+	public long getTotalEarnins() {
+		return totalEarnings;
 	}
-	public void setParentId(long parentId) {
-		this.parentId = parentId;
-	}
-
-	public String getParentName() {
-		return parentName;
-	}
-
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
-	}*/
 }

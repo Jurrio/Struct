@@ -52,4 +52,7 @@ public class Company {
 	public long getTotalEarnins() {
 		return totalEarnings;
 	}
+	public void setTotalEarnings(long totalEarnings) {
+		this.totalEarnings = totalEarnings;
+	}
 }

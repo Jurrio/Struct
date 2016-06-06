@@ -75,7 +75,7 @@ public class Connector {
         }
     }
 
-	private static void repairDatabase() throws SQLException {
+	static void repairDatabase() throws SQLException {
 		statement.executeUpdate("CREATE DATABASE " + Database.DATABASE_NAME);
     	statement.executeUpdate("USE " + Database.DATABASE_NAME);
     	statement.executeUpdate("CREATE TABLE " + Database.TABLE_COMPANY + 

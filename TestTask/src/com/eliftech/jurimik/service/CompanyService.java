@@ -2,6 +2,7 @@ package com.eliftech.jurimik.service;
 
 import com.eliftech.jurimik.model.Company;
 import com.eliftech.jurimik.repository.CompanyRepository;
+import com.eliftech.jurimik.util.CompanyUtils;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +12,7 @@ import com.eliftech.jurimik.exception.UnknownCompanyException;
 public class CompanyService {
 
 	public boolean add(Company company) {
+		CompanyUtils.updateTotalEarnings(company);
 		return new CompanyRepository().add(company);
 	}
 

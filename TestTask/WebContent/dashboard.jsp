@@ -30,6 +30,7 @@
 				<td>#</td>
 				<td>Name</td>
 				<td>Earnings</td>
+				<td>TotalEarnings</td>
 				<td>Parent</td>
 				<td>Parent.id</td>
 				<td></td>
@@ -40,6 +41,7 @@
 				<td>${company.id}</td>
 				<td><input class="disabled" name="title" type="text" value="${company.name}" readonly></td>
 				<td><input class="disabled" name="earning" type="text" value="${company.earnings}" readonly></td>
+				<td><input class="disabled" name="total" type="text" value="${company.totalEarnings}" readonly></td>
 				<td><input class="disabled" name="parent" type="text" value="${parent.name}" readonly></td>
 				<td><input class="disabled" name="parentId" type="text" value="${parent.id}" readonly></td>
 				<td><form action="deleteCompany" method="post"> 

@@ -49,7 +49,7 @@ public class Company {
 		this.children = children;
 	}
 	
-	public long getTotalEarnins() {
+	public long getTotalEarnings() {
 		return totalEarnings;
 	}
 	public void setTotalEarnings(long totalEarnings) {

@@ -1,6 +1,5 @@
 package com.eliftech.jurimik.util;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +39,24 @@ public class CompanyUtils {
 		nested--;
 		
 		return result;
+	}
+	
+	public static long calculateTotalEarnings(Company company) {
+		List<Company> children = new CompanyService().getChildren(company.getId());
+		long result = company.getEarnings();
+		for (Company child : children) {
+			result += calculateTotalEarnings(child);
+		}
+		return result;
+	}
+
+	public static void updateTotalEarnings(Company company) {
+		if (company.getParent() != null) {
+			company.getParent().setTotalEarnings(company.getParent().getTotalEarnings() + company.getTotalEarnings());
+			updateTotalEarnings(company.getParent());
+		}
+		// TODO Auto-generated method stub
+		
 	}
 
 }

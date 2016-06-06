@@ -16,7 +16,7 @@ public class CompanyRepository {
 	public boolean add(Company company) {
 		String query = "INSERT INTO company (name, earnings, totalEarnings, parent) VALUES ('"
 				+ company.getName() + "', '" + company.getEarnings() + "', '"
-				+ company.getTotalEarnins() + "', '" + CompanyUtils.parentId(company) + "');";
+				+ company.getTotalEarnings() + "', '" + CompanyUtils.parentId(company) + "');";
 		if (Connector.executeUpdate(query) > 0) return true;
 		return false;
 	}
@@ -71,7 +71,7 @@ public class CompanyRepository {
 	public boolean update(Company company) {
 		String query = "UPDATE company SET name = '" + company.getName() + 
 				"', earnings = '" + company.getEarnings() + 
-				"', totalEarnings = '" + company.getTotalEarnins() + 
+				"', totalEarnings = '" + company.getTotalEarnings() + 
 				"', parent = '" + CompanyUtils.parentId(company) + 
 				"' WHERE id = '" + company.getId() + "';";
 		if (Connector.executeUpdate(query) > 0) return true;
@@ -107,7 +107,12 @@ public class CompanyRepository {
 				companies.add(company);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				Connector.repairDatabase();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return companies;

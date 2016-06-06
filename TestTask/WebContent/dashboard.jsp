@@ -47,7 +47,7 @@
 						<input type="submit" value="Delete">
 					</form>
 				</td>
-				<td><form action="viewCompany" method="post">
+				<td><form action="viewCompany" method="get">
 						<input type="hidden" name="id" value="${company.id}">
 						<input type="submit" value="Info">
 				 	</form>

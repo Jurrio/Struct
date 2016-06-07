@@ -19,14 +19,17 @@
 		
 		${message}
 		<h1>${company.name}</h1>
-		Parent company: <a href="viewCompany?id=${company.parent.id}">${company.parent.name}</a>
-		
+		<p>Parent company: <a href="viewCompany?id=${company.parent.id}">${company.parent.name}</a></p>
+		<p>Earnings: ${company.earnings}</p>
+		<p>Total: ${company.totalEarnings}</p>
 		<p>Child companies: </p>
+		${company.name} | ${company.earnings} | ${company.totalEarnings} 
+		<br>
 		<c:forEach items="${mapcompanies}" var="entry">
 		 	<c:forEach var="i" begin="1" end="${entry.value}">
-		 	--
+			--
 		 	</c:forEach>
-		 	<a href="viewCompany?id=${entry.key.id}">${entry.key.name}</a>
+		 	<a href="viewCompany?id=${entry.key.id}">${entry.key.name}</a> | ${entry.key.earnings} | ${entry.key.totalEarnings}
    			<br>
 		</c:forEach>		
 

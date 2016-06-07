@@ -1,6 +1,7 @@
 package com.eliftech.jurimik.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +44,9 @@ public class DeleteCompanyServlet extends HttpServlet {
 			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

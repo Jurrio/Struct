@@ -1,6 +1,7 @@
 package com.eliftech.jurimik.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class ViewCompanyServlet extends HttpServlet {
 		} catch (NumberFormatException | UnknownCompanyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			request.getRequestDispatcher("view-company.jsp").forward(request, response);
 		}
@@ -47,6 +51,9 @@ public class ViewCompanyServlet extends HttpServlet {
 			request.setAttribute(Parameters.COMPANIES, childCompanies);
 		} catch (UnknownCompanyException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			request.setAttribute(Parameters.MESSAGE, Messages.VOID);
 			request.getRequestDispatcher("view-company.jsp").forward(request, response);			 

@@ -13,7 +13,7 @@ public class CompanyConverter {
 	public static Company convertCompanyFromResultSet(ResultSet rs) throws SQLException, UnknownCompanyException {
 		String name = rs.getString("name");
 		long earnings = rs.getLong("earnings");
-		CompanyBuilder foundCompany = new CompanyBuilder(name, earnings).id(rs.getLong("id")).parent(new CompanyService().lazyGet(rs.getLong("parent"))).children(new CompanyService().getChildren(rs.getLong("id")));
+		CompanyBuilder foundCompany = new CompanyBuilder(name, earnings).id(rs.getLong("id")).parent(new CompanyService().lazyGet(rs.getLong("parent"))).totalEarnings(rs.getLong("totalEarnings")).children(new CompanyService().getChildren(rs.getLong("id")));
 		
 		return foundCompany.build();
 	}
@@ -21,7 +21,7 @@ public class CompanyConverter {
 	public static Company lazyConvertCompanyFromResultSet(ResultSet rs) throws SQLException {
 		String name = rs.getString("name");
 		long earnings = rs.getLong("earnings");
-		CompanyBuilder foundCompany = new CompanyBuilder(name, earnings).id(rs.getLong("id"));
+		CompanyBuilder foundCompany = new CompanyBuilder(name, earnings).id(rs.getLong("id")).totalEarnings(rs.getLong("totalEarnings"));
 		
 		return foundCompany.build();
 	}

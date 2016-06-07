@@ -1,5 +1,6 @@
 package com.eliftech.jurimik.util;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +26,10 @@ public class CompanyUtils {
 	}
 	
 	public static long parentId(Company company) {
-		return (company.getParent() == null) ? 0 : company.getParent().getId();
+		return (company.getParent() == null) ? -1 : company.getParent().getId();
 	}
 	
-	public static Map<Company, Integer> nestedChildren(Map<Company, Integer> result, long id, int nested) throws UnknownCompanyException {
+	public static Map<Company, Integer> nestedChildren(Map<Company, Integer> result, long id, int nested) throws UnknownCompanyException, SQLException {
 		List<Company> children = new CompanyService().getChildren(id);
 		nested++;
 		for (Company child : children) {
@@ -41,7 +42,7 @@ public class CompanyUtils {
 		return result;
 	}
 	
-	public static long calculateTotalEarnings(Company company) {
+	public static long calculateTotalEarnings(Company company) throws SQLException {
 		List<Company> children = new CompanyService().getChildren(company.getId());
 		long result = company.getEarnings();
 		for (Company child : children) {
@@ -50,10 +51,14 @@ public class CompanyUtils {
 		return result;
 	}
 
-	public static void updateTotalEarnings(Company company) {
-		if (company.getParent() != null) {
-			company.getParent().setTotalEarnings(company.getParent().getTotalEarnings() + company.getTotalEarnings());
-			updateTotalEarnings(company.getParent());
+	public static void updateParentTotalEarnings(Company company) throws UnknownCompanyException, SQLException {
+		long id;
+		if ((id = parentId(company)) > 0) {
+			Company parent = new CompanyService().get(id);
+			long total = parent.getEarnings() + CompanyUtils.calculateTotalEarnings(company);
+			parent.setTotalEarnings(total);
+			new CompanyService().update(parent);
+			updateParentTotalEarnings(parent);
 		}
 		// TODO Auto-generated method stub
 		

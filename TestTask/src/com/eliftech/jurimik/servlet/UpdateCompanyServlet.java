@@ -47,7 +47,8 @@ public class UpdateCompanyServlet extends HttpServlet {
 			String name = company.getName();
 			long earnings = company.getEarnings();
 			long parentId = CompanyUtils.parentId(company);
-			
+			long totalEarnings = CompanyUtils.calculateTotalEarnings(company);
+					
 			if (ParamUtils.isNotBlank(request.getParameter(Parameters.COMPANY))) {
 				name = request.getParameter(Parameters.NAME);
 			}
@@ -64,7 +65,7 @@ public class UpdateCompanyServlet extends HttpServlet {
 				}
 			}
 			
-			Company updatedCompany = new CompanyBuilder(name, earnings).id(company.getId())
+			Company updatedCompany = new CompanyBuilder(name, earnings).id(company.getId()).totalEarnings(totalEarnings)
 					.parent(new CompanyService().lazyGet(parentId)).build();
 						
 //			company.setName(request.getParameter(Parameters.NAME));

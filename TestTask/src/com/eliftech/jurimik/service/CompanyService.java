@@ -11,9 +11,12 @@ import com.eliftech.jurimik.exception.UnknownCompanyException;
 
 public class CompanyService {
 
-	public boolean add(Company company) {
-		CompanyUtils.updateTotalEarnings(company);
-		return new CompanyRepository().add(company);
+	public boolean add(Company company) throws UnknownCompanyException, SQLException {
+		boolean isAdded = new CompanyRepository().add(company);
+		if (isAdded) {
+			CompanyUtils.updateParentTotalEarnings(company);
+		}
+		return isAdded;
 	}
 
 	public List<Company> find(String parameter) throws UnknownCompanyException {
@@ -28,8 +31,9 @@ public class CompanyService {
 		return new CompanyRepository().lazyGet(parentId);
 	}
 
-	public boolean delete(long id) {
+	public boolean delete(long id) throws SQLException {
 		Company delCompany;
+		boolean isDeleted;
 		try {
 			List<Company> children = this.getChildren(id);
 			delCompany = get(id);
@@ -37,10 +41,14 @@ public class CompanyService {
 				c.setParent(delCompany.getParent());
 				this.update(c);
 			}
+			isDeleted = new CompanyRepository().delete(id);
+			if (isDeleted && delCompany.getParent() != null) {
+				CompanyUtils.calculateTotalEarnings(get(CompanyUtils.parentId(delCompany)));
+			}
 		} catch (UnknownCompanyException e) {
 			return false;
 		}
-		return new CompanyRepository().delete(id);
+		return isDeleted;
 	}
 
 	public boolean update(Company company) {
@@ -51,7 +59,7 @@ public class CompanyService {
 		return new CompanyRepository().getAll();
 	}
 
-	public List<Company> getChildren(long id) {
+	public List<Company> getChildren(long id) throws SQLException {
 		return new CompanyRepository().getChildren(id);
 	}
 }

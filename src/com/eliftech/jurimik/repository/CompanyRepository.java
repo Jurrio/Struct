@@ -22,17 +22,13 @@ public class CompanyRepository {
 		return false;
 	}
 
-	public Company get(long id) throws UnknownCompanyException {
+	public Company get(long id) throws UnknownCompanyException, SQLException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = Connector.executeQuery(query);
-		try {
-			while (rs.next()) {
-				return CompanyConverter.convertCompanyFromResultSet(rs);
-			}
-			rs.close();
-		} catch (SQLException e) {
-
+		while (rs.next()) {
+			return CompanyConverter.convertCompanyFromResultSet(rs);
 		}
+		rs.close();
 
 		return new CompanyBuilder("null", 0).build(); // TODO temporary
 
@@ -47,18 +43,14 @@ public class CompanyRepository {
 		return null;
 	}
 
-	public List<Company> find(String pattern) throws UnknownCompanyException {
+	public List<Company> find(String pattern) throws UnknownCompanyException, SQLException {
 		String query = "SELECT * FROM company WHERE name, earnings LIKE '%" + pattern + "%';";
 		ResultSet rs = Connector.executeQuery(query);
 		List<Company> resultList = new ArrayList<>();
-		try {
-			while (rs.next()) {
-				resultList.add(CompanyConverter.lazyConvertCompanyFromResultSet(rs));
-			}
-			rs.close();
-		} catch (SQLException e) {
-
+		while (rs.next()) {
+			resultList.add(CompanyConverter.lazyConvertCompanyFromResultSet(rs));
 		}
+		rs.close();
 		return resultList;
 	}
 
@@ -92,28 +84,30 @@ public class CompanyRepository {
 		return children;
 	}
 
-	public List<Company> getAll() throws UnknownCompanyException {
+	public List<Company> getAll() throws UnknownCompanyException, SQLException {
 		String query = "SELECT * FROM company;";
 		ResultSet rs = Connector.executeQuery(query);
 		List<Company> companies = new ArrayList<>();
-		try {
-			while (rs.next()) {
-				Company company = null;
-				company = CompanyConverter.convertCompanyFromResultSet(rs);
+		while (rs.next()) {
+			Company company = null;
+			company = CompanyConverter.convertCompanyFromResultSet(rs);
 
-				companies.add(company);
-			}
-		} catch (SQLException e) {
-			try {
-				Connector.repairDatabase();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			companies.add(company);
 		}
 		return companies;
+	}
+	
+	public void checkDatabase() throws SQLException {
+		String query = "SELECT * FROM company WHERE id = 1;";
+		ResultSet rs = Connector.executeQuery(query);
+		try {
+			while (rs.next()) {
+				System.out.println("DB is OK!");
+			}
+		} catch (SQLException e) {
+			System.out.println("DB has defect! \n + Repair...");
+			Connector.repairDatabase();
+		}
 	}
 
 }

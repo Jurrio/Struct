@@ -96,18 +96,4 @@ public class CompanyRepository {
 		}
 		return companies;
 	}
-	
-	public void checkDatabase() throws SQLException {
-		String query = "SELECT * FROM company WHERE id = 1;";
-		ResultSet rs = Connector.executeQuery(query);
-		try {
-			while (rs.next()) {
-				System.out.println("DB is OK!");
-			}
-		} catch (SQLException e) {
-			System.out.println("DB has defect! \n + Repair...");
-			Connector.repairDatabase();
-		}
-	}
-
 }

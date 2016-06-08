@@ -22,27 +22,29 @@ import com.eliftech.jurimik.util.CompanyUtils;
 @WebServlet("/ViewCompanyServlet")
 public class ViewCompanyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			Company company = new CompanyService().get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
 			Map<Company, Integer> nestedChildren = new LinkedHashMap<>();
 			nestedChildren = CompanyUtils.nestedChildren(nestedChildren, company.getId(), 0);
 			request.setAttribute(Parameters.COMPANY, company);
 			request.setAttribute(Parameters.MAP_COMPANIES, nestedChildren);
-		} catch (NumberFormatException | UnknownCompanyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (UnknownCompanyException e) {
+			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+			// e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+			// e.printStackTrace();
 		} finally {
 			request.getRequestDispatcher("view-company.jsp").forward(request, response);
 		}
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			Company company = new CompanyService().get(Long.parseLong(request.getParameter(Parameters.COMPANY_ID)));
 			List<Company> childCompanies = new CompanyService().getChildren(company.getId());
@@ -52,11 +54,10 @@ public class ViewCompanyServlet extends HttpServlet {
 		} catch (UnknownCompanyException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+//			e.printStackTrace();
 		} finally {
-			request.setAttribute(Parameters.MESSAGE, Messages.VOID);
-			request.getRequestDispatcher("view-company.jsp").forward(request, response);			 
+			request.getRequestDispatcher("view-company.jsp").forward(request, response);
 		}
 	}
 

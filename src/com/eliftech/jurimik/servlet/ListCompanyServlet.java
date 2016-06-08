@@ -19,12 +19,14 @@ import com.eliftech.jurimik.service.CompanyService;
 @WebServlet("/ListCompanyServlet")
 public class ListCompanyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			List<Company> companies = new CompanyService().getAll();
 			if (companies.isEmpty()) {
@@ -35,13 +37,13 @@ public class ListCompanyServlet extends HttpServlet {
 			}
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.LIST_ALL_ERROR + e.getMessage());
+			// e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+			// e.printStackTrace();
 		}
-	
+
 	}
 
 }

@@ -18,42 +18,44 @@ import com.eliftech.jurimik.service.CompanyService;
 public class DeleteCompanyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			request.setAttribute(Parameters.MESSAGE, Messages.VOID);
 			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.LIST_ALL_ERROR + e.getMessage());
+			// e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+			// e.printStackTrace();
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			long id = Long.parseLong(request.getParameter(Parameters.COMPANY_ID));
-		
+
 			boolean isDeleted = new CompanyService().delete(id);
-			
+
 			if (isDeleted) {
 				request.setAttribute(Parameters.MESSAGE, Messages.DELETE_SUCCESS);
 			} else {
 				request.setAttribute(Parameters.MESSAGE, Messages.DELETE_FAIL);
 			}
-		
+
 			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+			// e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+			// e.printStackTrace();
 		}
-		
+
 	}
 
 }

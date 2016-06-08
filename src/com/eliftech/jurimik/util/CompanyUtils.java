@@ -10,7 +10,7 @@ import com.eliftech.jurimik.service.CompanyService;
 
 public class CompanyUtils {
 	
-	public static boolean isChildrenId(long id, long newParentId) throws UnknownCompanyException {
+	public static boolean isChildrenId(long id, long newParentId) throws UnknownCompanyException, SQLException {
 		Company company = new CompanyService().get(id);
 		List<Company> children = company.getChildren();
 		
@@ -59,9 +59,7 @@ public class CompanyUtils {
 			parent.setTotalEarnings(total);
 			new CompanyService().update(parent);
 			updateParentTotalEarnings(parent);
-		}
-		// TODO Auto-generated method stub
-		
+		}		
 	}
 
 }

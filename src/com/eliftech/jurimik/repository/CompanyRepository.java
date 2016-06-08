@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eliftech.jurimik.builder.CompanyBuilder;
 import com.eliftech.jurimik.exception.UnknownCompanyException;
 import com.eliftech.jurimik.model.Company;
 import com.eliftech.jurimik.util.CompanyConverter;
@@ -22,11 +21,12 @@ public class CompanyRepository {
 		return false;
 	}
 
-	public Company get(long id) throws UnknownCompanyException, SQLException {
+	public Company get(long id) throws SQLException, UnknownCompanyException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = new Connector().executeQuery(query);
 		if (!rs.next()) {
-			System.out.println("~~No found!~~");
+			rs.close();
+			throw new UnknownCompanyException("No company with this id:" + id);
 		}
 		else {
 			rs.first();
@@ -34,25 +34,22 @@ public class CompanyRepository {
 			rs.close();
 			return result;
 		}
-		rs.close();
-		return new CompanyBuilder("null", 0).build(); // TODO temporary
-
 	}
 
-	public Company lazyGet(long id) throws SQLException {
+	public Company lazyGet(long id) throws SQLException, UnknownCompanyException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = new Connector().executeQuery(query);
 		if (!rs.next()) {
-			
+			rs.close();
+			throw new UnknownCompanyException("No company with this id:" + id);
 		} else {
 			Company result = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
 			rs.close();
 			return result;
 		}
-		return null;
 	}
 
-	public List<Company> find(String pattern) throws UnknownCompanyException, SQLException {
+	public List<Company> find(String pattern) throws SQLException {
 		String query = "SELECT * FROM company WHERE name, earnings LIKE '%" + pattern + "%';";
 		ResultSet rs = new Connector().executeQuery(query);
 		List<Company> resultList = new ArrayList<>();
@@ -90,15 +87,12 @@ public class CompanyRepository {
 		return children;
 	}
 
-	public List<Company> getAll() throws UnknownCompanyException, SQLException {
+	public List<Company> getAll() throws SQLException {
 		String query = "SELECT * FROM company;";
 		ResultSet rs = new Connector().executeQuery(query);
 		List<Company> companies = new ArrayList<>();
 		while (rs.next()) {
-			Company company = null;
-			company = CompanyConverter.convertCompanyFromResultSet(rs);
-
-			companies.add(company);
+			companies.add(CompanyConverter.convertCompanyFromResultSet(rs));
 		}
 		return companies;
 	}

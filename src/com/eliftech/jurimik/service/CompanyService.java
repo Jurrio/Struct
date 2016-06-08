@@ -19,11 +19,11 @@ public class CompanyService {
 		return isAdded;
 	}
 
-	public List<Company> find(String parameter) throws UnknownCompanyException {
+	public List<Company> find(String parameter) throws UnknownCompanyException, SQLException {
 		return new CompanyRepository().find(parameter);
 	}
 
-	public Company get(long id) throws UnknownCompanyException {
+	public Company get(long id) throws UnknownCompanyException, SQLException {
 		return new CompanyRepository().get(id);
 	}
 	
@@ -55,7 +55,7 @@ public class CompanyService {
 		return new CompanyRepository().update(company);
 	}
 
-	public List<Company> getAll() throws UnknownCompanyException {
+	public List<Company> getAll() throws UnknownCompanyException, SQLException {
 		return new CompanyRepository().getAll();
 	}
 

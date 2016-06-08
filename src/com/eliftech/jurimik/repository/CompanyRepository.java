@@ -25,11 +25,16 @@ public class CompanyRepository {
 	public Company get(long id) throws UnknownCompanyException, SQLException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = new Connector().executeQuery(query);
-		while (rs.next()) {
-			return CompanyConverter.convertCompanyFromResultSet(rs);
+		if (!rs.next()) {
+			System.out.println("~~No found!~~");
+		}
+		else {
+			rs.first();
+			Company result = CompanyConverter.convertCompanyFromResultSet(rs);
+			rs.close();
+			return result;
 		}
 		rs.close();
-
 		return new CompanyBuilder("null", 0).build(); // TODO temporary
 
 	}
@@ -37,8 +42,12 @@ public class CompanyRepository {
 	public Company lazyGet(long id) throws SQLException {
 		String query = "SELECT * FROM company WHERE id = " + id + ";";
 		ResultSet rs = new Connector().executeQuery(query);
-		while (rs.next()) {
-			return CompanyConverter.lazyConvertCompanyFromResultSet(rs);
+		if (!rs.next()) {
+			
+		} else {
+			Company result = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
+			rs.close();
+			return result;
 		}
 		return null;
 	}
@@ -76,10 +85,7 @@ public class CompanyRepository {
 		ResultSet rs = new Connector().executeQuery(query);
 		List<Company> children = new ArrayList<>();
 		while (rs.next()) {
-			Company company = null;
-			company = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
-
-			children.add(company);
+			children.add(CompanyConverter.lazyConvertCompanyFromResultSet(rs));
 		}
 		return children;
 	}

@@ -10,11 +10,11 @@ import com.eliftech.jurimik.constants.Database;
 
 
 public class Connector {
-	private static Statement statement;
-	private static Connection connection;
-	private static ResultSet resultSet;
+	private Statement statement;
+	private Connection connection;
+	private ResultSet resultSet;
 
-	static int executeUpdate(String query) {
+	int executeUpdate(String query) {
 		int result = 0;
 		
 		try {
@@ -31,7 +31,7 @@ public class Connector {
         return result;
     }
 	
-	static ResultSet executeQuery(String query) {
+	ResultSet executeQuery(String query) {
 		try {
 			connection = getDBConnection();
 			createStatement();
@@ -46,7 +46,7 @@ public class Connector {
 		return resultSet;
     }
 		
-	private static Connection getDBConnection() throws SQLException, ClassNotFoundException {
+	private Connection getDBConnection() throws SQLException, ClassNotFoundException {
         Class.forName(Database.DRIVER);
         java.util.Properties properties = new java.util.Properties();
         properties.put("user", Database.USER);
@@ -56,7 +56,7 @@ public class Connector {
         return (DriverManager.getConnection(Database.URL, properties));
     }
 	
-	private static void close(AutoCloseable[] autoCloseables) {
+	private void close(AutoCloseable[] autoCloseables) {
 		for (AutoCloseable autoCloseable : autoCloseables) {
 			try {
 				autoCloseable.close();
@@ -66,7 +66,7 @@ public class Connector {
 		}
 	}
 	
-	private static void createStatement() throws SQLException {
+	private void createStatement() throws SQLException {
         statement = connection.createStatement();
         try {
         	statement.executeUpdate("USE " + Database.DATABASE_NAME);
@@ -75,7 +75,7 @@ public class Connector {
         }
     }
 
-	static void repairDatabase() throws SQLException {
+	void repairDatabase() throws SQLException {
 		statement.executeUpdate("CREATE DATABASE " + Database.DATABASE_NAME);
     	statement.executeUpdate("USE " + Database.DATABASE_NAME);
     	statement.executeUpdate("CREATE TABLE " + Database.TABLE_COMPANY + 

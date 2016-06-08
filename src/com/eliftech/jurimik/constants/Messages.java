@@ -21,5 +21,9 @@ public class Messages {
 
 	public static final String EMPTY_LIST = "Unfortunatelly, list is empty";
 	public static final String LIST_OF_COMPANIES = "List of companies";
+
+	public static final String LIST_ALL_ERROR = "Error when creating the list";
+
+	public static final String SQL_ERROR = "It seems something went wrong... Please, let me know";
 	
 }

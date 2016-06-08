@@ -27,11 +27,11 @@ public class AddCompanyServlet extends HttpServlet {
 			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
 			request.getRequestDispatcher("add-company.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.LIST_ALL_ERROR + e.getMessage());
+//			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+//			e.printStackTrace();
 		}
 	}
 
@@ -60,10 +60,10 @@ public class AddCompanyServlet extends HttpServlet {
 		} catch (IllegalFormatEarningsException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+//			e.printStackTrace();
 		} catch (UnknownCompanyException e) {
-			// TODO Auto-generated catch block
+			request.setAttribute(Parameters.MESSAGE, e.getMessage());
 			e.printStackTrace();
 		} finally {
 			request.getRequestDispatcher("add-company.jsp").forward(request, response);

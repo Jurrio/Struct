@@ -1,6 +1,7 @@
 package com.eliftech.jurimik.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,9 @@ public class DatabaseCheckServlet extends HttpServlet {
 			request.setAttribute(Parameters.MESSAGE, Messages.OK);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -36,6 +36,9 @@ public class UpdateCompanyServlet extends HttpServlet {
 		} catch (NumberFormatException | UnknownCompanyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		request.getRequestDispatcher("edit-company.jsp").forward(request, response);
 	}

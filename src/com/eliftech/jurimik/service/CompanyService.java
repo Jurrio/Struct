@@ -26,27 +26,23 @@ public class CompanyService {
 	public Company get(long id) throws UnknownCompanyException, SQLException {
 		return new CompanyRepository().get(id);
 	}
-	
-	public Company lazyGet(long parentId) throws SQLException {
+
+	public Company lazyGet(long parentId) throws UnknownCompanyException, SQLException {
 		return new CompanyRepository().lazyGet(parentId);
 	}
 
-	public boolean delete(long id) throws SQLException {
+	public boolean delete(long id) throws UnknownCompanyException, SQLException {
 		Company delCompany;
 		boolean isDeleted;
-		try {
-			List<Company> children = this.getChildren(id);
-			delCompany = get(id);
-			for (Company c : children) {
-				c.setParent(delCompany.getParent());
-				this.update(c);
-			}
-			isDeleted = new CompanyRepository().delete(id);
-			if (isDeleted && delCompany.getParent() != null) {
-				CompanyUtils.calculateTotalEarnings(get(CompanyUtils.parentId(delCompany)));
-			}
-		} catch (UnknownCompanyException e) {
-			return false;
+		List<Company> children = this.getChildren(id);
+		delCompany = get(id);
+		for (Company c : children) {
+			c.setParent(delCompany.getParent());
+			this.update(c);
+		}
+		isDeleted = new CompanyRepository().delete(id);
+		if (isDeleted && delCompany.getParent() != null) {
+			CompanyUtils.calculateTotalEarnings(get(CompanyUtils.parentId(delCompany)));
 		}
 		return isDeleted;
 	}

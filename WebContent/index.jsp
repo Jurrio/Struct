@@ -17,9 +17,6 @@
 		
 		<p>Your database should has a user 'struct@localhost' with password 'struct'</p>
 		
-		<form action="checkDB" method="post">
-			<input type="submit" value="check database!">
-		</form>
 		${message}
 
 		

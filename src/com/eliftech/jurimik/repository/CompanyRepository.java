@@ -87,7 +87,7 @@ public class CompanyRepository {
 		return children;
 	}
 
-	public List<Company> getAll() throws SQLException {
+	public List<Company> getAll() throws SQLException, UnknownCompanyException {
 		String query = "SELECT * FROM company;";
 		ResultSet rs = new Connector().executeQuery(query);
 		List<Company> companies = new ArrayList<>();

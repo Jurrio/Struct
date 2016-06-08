@@ -25,13 +25,14 @@ public class AddCompanyServlet extends HttpServlet {
 		try {
 			request.setAttribute(Parameters.MESSAGE, Messages.VOID);
 			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
-			request.getRequestDispatcher("add-company.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
 			request.setAttribute(Parameters.MESSAGE, Messages.LIST_ALL_ERROR + e.getMessage());
-//			e.printStackTrace();
+			e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
 //			e.printStackTrace();
+		} finally {
+			request.getRequestDispatcher("add-company.jsp").forward(request, response);
 		}
 	}
 

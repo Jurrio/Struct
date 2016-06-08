@@ -35,13 +35,14 @@ public class ListCompanyServlet extends HttpServlet {
 				request.setAttribute(Parameters.MESSAGE, Messages.LIST_OF_COMPANIES);
 				request.setAttribute(Parameters.COMPANIES, companies);
 			}
-			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		} catch (UnknownCompanyException e) {
 			request.setAttribute(Parameters.MESSAGE, Messages.LIST_ALL_ERROR + e.getMessage());
 			// e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
 			// e.printStackTrace();
+		} finally {
+			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		}
 
 	}

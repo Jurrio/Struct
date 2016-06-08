@@ -41,7 +41,8 @@ public class CompanyRepository {
 		ResultSet rs = new Connector().executeQuery(query);
 		if (!rs.next()) {
 			rs.close();
-			throw new UnknownCompanyException("No company with this id:" + id);
+			return null;
+//			throw new UnknownCompanyException("No company with this id:" + id);
 		} else {
 			Company result = CompanyConverter.lazyConvertCompanyFromResultSet(rs);
 			rs.close();

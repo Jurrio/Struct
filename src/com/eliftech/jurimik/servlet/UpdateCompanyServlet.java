@@ -33,12 +33,15 @@ public class UpdateCompanyServlet extends HttpServlet {
 			request.setAttribute(Parameters.COMPANY, company);
 			request.setAttribute(Parameters.COMPANY_ID, company.getId());
 			request.setAttribute(Parameters.COMPANIES, new CompanyService().getAll());
-		} catch (NumberFormatException | UnknownCompanyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			request.setAttribute(Parameters.MESSAGE, Messages.BAD_FORMAT_EARNING + e.getMessage());
+//			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+//			e.printStackTrace();
+		} catch (UnknownCompanyException e) {
+			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+//			e.printStackTrace();
 		}
 		request.getRequestDispatcher("edit-company.jsp").forward(request, response);
 	}
@@ -61,7 +64,7 @@ public class UpdateCompanyServlet extends HttpServlet {
 			if (ParamUtils.isNotBlank(request.getParameter(Parameters.PARENT))) {
 				long newParentId = Long.parseLong(request.getParameter(Parameters.PARENT));
 				if (newParentId == company.getId()) {
-					throw new IllegalIdException("This id is itself!");
+					throw new IllegalIdException("This id is itself for company " + company.getName() + ". Id: " + newParentId);
 				}
 				if (!CompanyUtils.isChildrenId(company.getId(), newParentId)) {
 					parentId = newParentId;
@@ -87,18 +90,15 @@ public class UpdateCompanyServlet extends HttpServlet {
 						
 		} catch (UnknownCompanyException e) {
 			request.setAttribute(Parameters.MESSAGE, e.getMessage());
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.SQL_ERROR + e.getMessage());
+//			e.printStackTrace();
 		} catch (IllegalIdException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, e.getMessage());
+//			e.printStackTrace();
 		} catch (IllegalFormatEarningsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute(Parameters.MESSAGE, Messages.BAD_FORMAT_EARNING + e.getMessage());
+//			e.printStackTrace();
 		} finally {
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);;
 		}

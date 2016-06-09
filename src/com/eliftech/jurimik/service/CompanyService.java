@@ -47,7 +47,7 @@ public class CompanyService {
 		return isDeleted;
 	}
 
-	public boolean update(Company company) {
+	public boolean update(Company company) throws SQLException {
 		return new CompanyRepository().update(company);
 	}
 

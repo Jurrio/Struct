@@ -26,8 +26,6 @@ public class Connector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-        close(new AutoCloseable[]{statement, connection});
-
         return result;
     }
 	
@@ -41,7 +39,6 @@ public class Connector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		close(new AutoCloseable[]{statement, connection});
         
 		return resultSet;
     }
@@ -56,13 +53,15 @@ public class Connector {
         return (DriverManager.getConnection(Database.URL, properties));
     }
 	
-	private void close(AutoCloseable[] autoCloseables) {
-		for (AutoCloseable autoCloseable : autoCloseables) {
-			try {
-				autoCloseable.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	void close() throws SQLException {
+		if (connection != null) {
+			connection.close();
+		}
+		if (statement != null) {
+			statement.close();
+		}
+		if (resultSet != null) {
+			resultSet.close();
 		}
 	}
 	

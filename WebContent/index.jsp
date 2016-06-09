@@ -19,6 +19,7 @@
 		
 		${message}
 
+		<img class=under-image src="img/Page-Under-Construction.png">
 		
 	</body>
 </html>

@@ -48,7 +48,6 @@
 			</form>
 		</div>
 	<p>Message:<c:out value="${message}"/></p>
-	<p>${fn:length(companies)}</p>
 
 	</body>
 </html>

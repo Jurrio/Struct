@@ -70,7 +70,7 @@
 
 	</table>
 	<p>
-		<c:out value="Message: ${message} ${fn:length(companies)} items" />
+		<c:out value="Message: ${message}" />
 	</p>
 
 </body>

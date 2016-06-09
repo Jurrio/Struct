@@ -28,6 +28,10 @@
     <servlet-class>com.eliftech.servlet.HomeServlet</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>SearchServlet</servlet-name>
+  	<servlet-class>com.eliftech.servlet.SearchCompanyServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>ListCompanyServlet</servlet-name>
     <servlet-class>com.eliftech.servlet.ListCompanyServlet</servlet-class>
   </servlet>
@@ -58,6 +62,10 @@
   <servlet-mapping>
     <servlet-name>ListCompanyServlet</servlet-name>
     <url-pattern>/showAllCompanies</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SearchServlet</servlet-name>
+  	<url-pattern>/searchCompany</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UpdateCompanyServlet</servlet-name>

@@ -51,7 +51,7 @@ public class CompanyRepository {
 	}
 
 	public List<Company> find(String pattern) throws SQLException {
-		String query = "SELECT * FROM company WHERE name, earnings LIKE '%" + pattern + "%';";
+		String query = "SELECT * FROM company WHERE name LIKE '%" + pattern + "%';";
 		ResultSet rs = new Connector().executeQuery(query);
 		List<Company> resultList = new ArrayList<>();
 		while (rs.next()) {

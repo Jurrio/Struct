@@ -10,5 +10,6 @@ public class Parameters {
 	public static final String COMPANIES = "companies";
 	public static final String COMPANY = "company";
 	public static final String MAP_COMPANIES = "mapcompanies";
+	public static final String SEARCH = "search";
 	
 }

@@ -38,14 +38,14 @@ body {
 }
 
 .field {
-	clear:both; 
-	text-align:right;
-	line-height:25px;
+	clear: both;
+	text-align: right;
+	line-height: 25px;
 }
 
 .field label {
-	float:left;
-	padding-right:10px;
+	float: left;
+	padding-right: 10px;
 }
 
 .header {
@@ -61,12 +61,12 @@ body {
 }
 
 .main-div {
-    width: 250px;
-    height: 250px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -125px 0 0 -125px;
+	width: 250px;
+	height: 250px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -125px 0 0 -125px;
 }
 
 .main-food-img {
@@ -86,13 +86,13 @@ body {
 }
 
 .reg-form {
-	padding:1em;
-	border:1px solid #e3e3e3;     
-	border-radius:5px;
-	min-width:250px;
-	overflow:auto;
-	float:left;
-	texl-align:center;
+	padding: 1em;
+	border: 1px solid #e3e3e3;
+	border-radius: 5px;
+	min-width: 250px;
+	overflow: auto;
+	float: left;
+	texl-align: center;
 }
 
 .search-input {
@@ -100,8 +100,8 @@ body {
 }
 
 .submit_field {
-	margin-top:0.8em;
-	background: #e3e3e3;  
+	margin-top: 0.8em;
+	background: #e3e3e3;
 }
 
 .success {

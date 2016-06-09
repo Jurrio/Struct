@@ -42,7 +42,11 @@
 			href="ListCompanyServlet">Dashboard</a>
 	</p>
 	<p>
-		For delete company press delete on <a href="ListCompanyServlet">Dashboard</a>
+		For delete company press delete on <a href="ListCompanyServlet">Dashboard</a>.
+		You will delete company from database.
+	</p>
+	<p>
+		You can search company by name on <a href="ListCompanyServlet">Dashboard</a>
 	</p>
 
 </body>

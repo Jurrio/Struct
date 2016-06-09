@@ -21,5 +21,11 @@
 
 		<img class=under-image src="img/Page-Under-Construction.png">
 		
+		<p>About: </p>
+		<p>If you want add the company you can open page <a href="addCompany">add-company</a> and input name, earnings and main company (optional). When you press Add - new company will store in database </p>
+		<p>If you want edit existing company you can open <a href="ListCompanyServlet">Dashboard</a> choose company and press "edit"</p>
+		<p>For view information about company - press view on <a href="ListCompanyServlet">Dashboard</a></p>
+		<p>For delete company press delete on <a href="ListCompanyServlet">Dashboard</a></p>
+		
 	</body>
 </html>
